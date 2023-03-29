@@ -130,3 +130,6 @@ dmypy.json
 
 # ssh access
 pem/
+
+# secret
+config.json
