@@ -133,3 +133,8 @@ pem/
 
 # secret
 config.json
+
+# data
+*.mp3
+*.mp4
+*.wav
