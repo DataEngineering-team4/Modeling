@@ -1,6 +1,10 @@
 import openai
 import json
 
+from g2pk import G2p
+
+g2p = G2p()
+
 with open('./config.json', 'r') as f:
     config = json.load(f)
 
@@ -11,12 +15,17 @@ completion = openai.ChatCompletion.create(
     messages = [
         {
             "role": "system",
-            "content": "You are Homer Jay Simpson the main protagonist of the American animated sitcom The Simpsons",
+            "content": "너는 어린아이들을 가르치는 유치원 선생님이야. 어린아이에게 설명하듯이 대답해 줘",
+            # "content": "You are Homer Jay Simpson the main protagonist of the American animated sitcom The Simpsons",
         },
         {
             "role": "user",
-            "content": "Hello Homer. How are you?",
+            "content": "선생님, 딥러닝이 뭐에요?",
         },
     ],
 )
-print(completion['choices'][0]['message']['content'])
+
+sent = completion['choices'][0]['message']['content']
+
+print(sent)
+print(g2p(sent))
