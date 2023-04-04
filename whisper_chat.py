@@ -1,5 +1,4 @@
 import openai
-import os
 import json
 import whisper
 
@@ -23,7 +22,7 @@ def natural_g2pk(text):
 # Whisper
 file_path = './4_5631.wav'
 audio_file_1 = open(file_path, "rb")
-print('load audio')
+# print('load audio')
 
 model = whisper.load_model("base")
 
@@ -31,26 +30,29 @@ result = model.transcribe(file_path, verbose=False, language='Korean', fp16=Fals
 text = result["text"]
 print(f'유저: {text}')
 
-with open('./messages.json') as message_file:
-    messages = json.load(message_file)
+json_path = './messages.json'
+with open(json_path) as message_file:
+    json_data = json.load(message_file)
 
-print(messages)
+messages = json_data['messages']
+# print(messages)
 
 message = text
 if message:
-    messages['messages'].append(
+    messages.append(
         {"role": "user", "content": message},
     )
     chat = openai.ChatCompletion.create(
         model="gpt-3.5-turbo", 
-        messages=messages['messages'],
+        messages=messages,
     )
 
 reply = chat.choices[0].message.content
-print(reply)
+print(f'g2pk 처리 전: {reply}')
 voice = natural_g2pk(reply)
 print(f"뽀로로: {voice}")
 
-messages['messages'].append({"role": "assistant", "content": reply})
-with open('./messages.json', 'w') as outfile:
-    json.dump(messages, outfile, indent=2)
+json_data['messages'].append({"role": "assistant", "content": reply})
+# print(json_data)
+with open(json_path, 'w') as outfile:
+    json.dump(json_data, outfile, indent=2)
