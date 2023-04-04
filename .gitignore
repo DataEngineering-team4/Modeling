@@ -133,6 +133,7 @@ pem/
 
 # secret
 config.json
+messages.json
 
 # data
 *.mp3
