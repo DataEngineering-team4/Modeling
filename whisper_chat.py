@@ -9,21 +9,18 @@ with open('./config.json', 'r') as f:
 openai.api_key = config['DEFAULT']['API_KEY']
 
 #Whisper
-file_path = './fooding.mp3'
+file_path = './4_5631.wav'
 audio_file_1 = open(file_path, "rb")
 print('load audio')
-# transcript = openai.Audio.transcribe("whisper-1", audio_file_1)
-# print('done')
-# text = transcript['text']
-# print(text)
 
 model = whisper.load_model("base")
-result = model.transcribe(file_path, verbose=True, language='Korean')
+
+result = model.transcribe(file_path, verbose=False, language='Korean') # if you use CPU, then give 'fp16=False' option
 text = result["text"]
 
 messages = [{
             "role":"system",
-            "content" : "너는 한국의 유명 애니메이션의 주인공인 뽀로로야. 뽀로로의 말투로, 한글로 대답해 줘."
+            "content" : "노는 것을 제일 좋아하는 개구쟁이 5살 아이의 말투로 대답해 줘."
         },]
 
 message = text
