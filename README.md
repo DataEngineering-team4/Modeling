@@ -25,11 +25,11 @@ python run.py
 ```
 
 Shell창 하나 더 열고 프론트엔드 실행
-(MAC 기준 npm install에서 의존성 문제 발생)
+
 ```
 cd mimic-recording-studio
 cd frontend
-npm install
+npm install #MAC 기준 호환성 문제 발생(npm install --legacy-peer-deps)로 해결
 npm run start
 ```
 
