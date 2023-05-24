@@ -18,12 +18,14 @@ conda activate mimic
 conda install ffmpeg
 cd mimic-recording-studio
 cd backend
+#WINDOW
 pip install -r .\requirements.txt
+#MAC: pip install -r requirements.txt
 python run.py
 ```
 
 Shell창 하나 더 열고 프론트엔드 실행
-
+(MAC 기준 npm install에서 의존성 문제 발생)
 ```
 cd mimic-recording-studio
 cd frontend
