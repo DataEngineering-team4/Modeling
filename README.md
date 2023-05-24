@@ -29,7 +29,7 @@ Shell창 하나 더 열고 프론트엔드 실행
 ```
 cd mimic-recording-studio
 cd frontend
-npm install #MAC 기준 호환성 문제 발생(npm install --legacy-peer-deps)로 해결
+npm install #MAC 기준 호환성 문제 발생(npm install --force)로 해결
 npm run start
 ```
 
