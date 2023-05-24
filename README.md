@@ -37,7 +37,9 @@ npm run start
 
 웹 브라우저에 Mimic Recording Studio 표시된 이후
 
-**민준 : CORS 문제 발생했음! 크롬 확장 https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf 으로 해결**
+**민준 :BACKEND에 fetch하는 과정에서 CORS 문제 발생했음!**
+
+**크롬 확장 https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf 으로 해결**
 - 마이크 사용 권한 허용
 - 이름 입력 (아무거나 상관 없음)
 - Record 버튼 클릭해서 녹음 시작
