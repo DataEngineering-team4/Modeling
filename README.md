@@ -25,7 +25,7 @@ python run.py
 ```
 
 Shell창 하나 더 열고 프론트엔드 실행
--민준 : 나의 경우에는 frontend/src/App/index.js의 localhost:5000을 127.0.0.1:5000으로 바꿔야 작동했음. 내 hosts 설정 때문일수도 있음
+- 민준 : 나의 경우에는 frontend/src/App/index.js의 localhost:5000을 127.0.0.1:5000으로 바꿔야 작동했음. 내 hosts 설정 때문일수도 있음
 
 ```
 cd mimic-recording-studio
