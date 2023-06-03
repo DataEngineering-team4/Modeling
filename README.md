@@ -18,21 +18,27 @@ conda activate mimic
 conda install ffmpeg
 cd mimic-recording-studio
 cd backend
+#WINDOW
 pip install -r .\requirements.txt
+#MAC: pip install -r requirements.txt
 python run.py
 ```
 
 Shell창 하나 더 열고 프론트엔드 실행
+- 민준 : 나의 경우에는 frontend/src/App/index.js의 localhost:5000을 127.0.0.1:5000으로 바꿔야 작동했음. 내 hosts 설정 때문일수도 있음
 
 ```
 cd mimic-recording-studio
 cd frontend
-npm install
+npm install #MAC 기준 호환성 문제 발생(npm install --force)로 해결
 npm run start
 ```
 
+
 웹 브라우저에 Mimic Recording Studio 표시된 이후
 
+**민준 :BACKEND에 fetch하는 과정에서 CORS 문제 발생했음!**
+**크롬 확장 https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf 으로 해결**
 - 마이크 사용 권한 허용
 - 이름 입력 (아무거나 상관 없음)
 - Record 버튼 클릭해서 녹음 시작
