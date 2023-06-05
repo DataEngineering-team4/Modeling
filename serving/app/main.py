@@ -19,13 +19,10 @@ app.add_middleware(
 
 app.include_router(predict.router)
 
-@app.get("/")
+@app.get("/ai/dev/team4")
 def hello_world():
     return {"message": "Hi I'm choonsik!"}
 
-@app.get("/items/{item_id}/{q}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
 
 if __name__ == "__main__":
     uvicorn.run(
