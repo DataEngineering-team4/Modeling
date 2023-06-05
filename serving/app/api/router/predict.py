@@ -3,10 +3,10 @@ from tensorflow_tts.inference import TFAutoModel
 from tensorflow_tts.inference import AutoProcessor
 from scipy.io.wavfile import write
 import numpy as np
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Request
 
 router = APIRouter(
-    prefix="/predict",
+    prefix="/ai/dev/team4/predict",
     tags=["predict"],
     responses={404: {"description": "Not Found"}},
 )
@@ -15,10 +15,13 @@ fastspeech2 = TFAutoModel.from_pretrained("tensorspeech/tts-fastspeech2-kss-ko",
 mb_melgan = TFAutoModel.from_pretrained("tensorspeech/tts-mb_melgan-kss-ko", name="mb_melgan")
 processor = AutoProcessor.from_pretrained("tensorspeech/tts-fastspeech2-kss-ko")
 
-@router.put("/inference")
-async def do_synthesis(input_text: str = Query(..., description="Input text"),
-                      text2mel_model: str = "fastspeech2",
-                      vocoder_model: str = "mb_melgan"):
+@router.post("/inference")
+async def do_synthesis(request: Request):
+    request_body = await request.json()
+    input_text = request_body.get('input_text', '')
+    text2mel_model = request_body.get('text2mel_model', 'fastspeech2')
+    vocoder_model = request_body.get('vocoder_model', 'mb_melgan')
+
     input_ids = processor.text_to_sequence(input_text)
     # text2mel part
     _, mel_outputs, _, _, _ = text2mel_model.inference(
