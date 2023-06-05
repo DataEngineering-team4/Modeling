@@ -4,6 +4,7 @@ from tensorflow_tts.inference import AutoProcessor
 from scipy.io.wavfile import write
 import numpy as np
 from fastapi import APIRouter, Request
+from pathlib import Path
 
 router = APIRouter(
     prefix="/ai/dev/team4/predict",
@@ -19,8 +20,10 @@ processor = AutoProcessor.from_pretrained("tensorspeech/tts-fastspeech2-kss-ko")
 async def do_synthesis(request: Request):
     request_body = await request.json()
     input_text = request_body.get('input_text', '')
-    text2mel_model = request_body.get(text2mel_model, fastspeech2)
-    vocoder_model = request_body.get(vocoder_model, mb_melgan)
+    # text2mel_model = request_body.get(text2mel_model, fastspeech2)
+    # vocoder_model = request_body.get(vocoder_model, mb_melgan)
+    text2mel_model = fastspeech2
+    vocoder_model = mb_melgan
 
     input_ids = processor.text_to_sequence(input_text)
     # text2mel part
@@ -40,6 +43,9 @@ async def do_synthesis(request: Request):
 
     rate = 22050
     scaled = np.int16(audio / np.max(np.abs(audio)) * 32767)
-    write('./wav_dir/test.wav', rate, scaled)
+    result_path = './wav_dir'
+    result_path = Path(result_path)
+    result_path.mkdir(parents=True, exist_ok=True)
+    write(f'./wav_dir/{input_text}.wav', rate, scaled)
 
     return {"mel_outputs": mel_outputs.tolist(), "audio": audio.tolist()}
