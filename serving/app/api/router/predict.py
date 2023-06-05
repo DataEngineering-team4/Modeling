@@ -19,8 +19,8 @@ processor = AutoProcessor.from_pretrained("tensorspeech/tts-fastspeech2-kss-ko")
 async def do_synthesis(request: Request):
     request_body = await request.json()
     input_text = request_body.get('input_text', '')
-    text2mel_model = request_body.get('text2mel_model', fastspeech2)
-    vocoder_model = request_body.get('vocoder_model', mb_melgan)
+    text2mel_model = request_body.get(text2mel_model, fastspeech2)
+    vocoder_model = request_body.get(vocoder_model, mb_melgan)
 
     input_ids = processor.text_to_sequence(input_text)
     # text2mel part
