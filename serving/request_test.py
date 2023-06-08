@@ -1,10 +1,16 @@
 import requests
+import argparse
+import os
 
 url = "https://mobilex.kr/ai/dev/team4/predict/inference"
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--input_text", type=str, help="Input text for synthesis")
+args = parser.parse_args()
+
 # 요청 페이로드
 payload = {
-    "input_text": "안녕하세요, 테스트 메시지입니다.",
+    "input_text": args.input_text,
     "text2mel_model": "fastspeech2",
     "vocoder_model": "mb_melgan"
 }
@@ -17,8 +23,10 @@ if response.status_code == 200:
     data = response.json()
     mel_outputs = data["mel_outputs"]
     audio = data["audio"]
-    print("Mel outputs:", mel_outputs)
-    print("Audio:", audio)
+    print("Mel outputs:", bool(mel_outputs))
+    print("Audio:", bool(audio))
 else:
     print("Request failed with status code:", response.status_code)
+    
+os.system("scp -r InferenceDE:/home/team4/Modeling/serving/app/wav_dir ./app")
 
