@@ -5,6 +5,36 @@ from scipy.io.wavfile import write
 import numpy as np
 from fastapi import APIRouter, Request
 from pathlib import Path
+from io import BytesIO
+import datetime
+from core.setup import (AWS_S3_REGION_NAME, BUCKET_NAME, logger, openai, polly,
+                        polly_voice, s3)
+
+def get_file_url(file_key):
+    return f"https://{BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/{file_key}"
+
+def create_file_time():
+    now = datetime.datetime.now()
+    return f'{now.year}_{now.month}_{now.day}_{now.hour}{now.minute}{now.second}.wav'
+
+def create_output_file_name():
+    return f"audio/OUTPUT_{create_file_time()}"
+
+def save_file_to_s3(file, file_name):
+    """Return URL of file"""
+    try:
+        s3.upload_fileobj(file, BUCKET_NAME, file_name)
+        return get_file_url(file_name)
+    except Exception as e:
+        raise Exception(f"Error uploading to S3: {e}")
+    
+def save_audio(audio_data, file_name):
+    """Return URL of file"""
+    audio_file = BytesIO(audio_data)
+    try:
+        return save_file_to_s3(audio_file, file_name)
+    except Exception as e:
+        raise Exception("An Error Occur in SAVE AUDIO")
 
 physical_devices = tf.config.list_physical_devices('GPU')
 if len(physical_devices) > 0:
@@ -51,5 +81,10 @@ async def do_synthesis(request: Request):
     result_path = Path(result_path)
     result_path.mkdir(parents=True, exist_ok=True)
     write(f'./wav_dir/{input_text}.wav', rate, scaled)
+    
+    audio = './wav_dir/{input_text}.wav'
+    output_file_name = create_output_file_name()
+    
+    save_audio(audio, output_file_name)
 
     return {"mel_outputs": mel_outputs.tolist(), "audio": audio.tolist()}
