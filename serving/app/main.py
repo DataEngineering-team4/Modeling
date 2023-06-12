@@ -3,7 +3,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.router import predict
+from api.router.core import predict
 
 app = FastAPI()
 
