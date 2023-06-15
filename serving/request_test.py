@@ -21,6 +21,8 @@ response = requests.post(url, json=payload)
 # 응답 확인
 if response.status_code == 200:
     data = response.json()
+    print(data)
+    quit()
     mel_outputs = data["mel_outputs"]
     audio = data["audio"]
     print("Mel outputs:", bool(mel_outputs))
